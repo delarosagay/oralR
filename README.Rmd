@@ -2627,3 +2627,9 @@ You can also check the citation format directly in R using:
 ```R
 citation("oralR")
 ```
+
+## Documentation
+
+The introduction to the package can be found in [oralR-introduction.pdf](oralR-introduction.pdf). 
+
+*Please download the file to use the interactive table of contents.*
