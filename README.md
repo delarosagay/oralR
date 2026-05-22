@@ -19,14 +19,16 @@ The package includes four major groups of functionality:
 
 2.  Data cleaning and tidy transformation:
 
-`tidy_dental()` performs some core data‑cleaning and harmonisation steps
-required for downstream analysis, as it:
+- `tidy_dental()` performs some core data‑cleaning and harmonisation
+  steps required for downstream analysis, as it:
 
-- detects dataset format and converts it into a standard tidy structure
-- performs automatic conversion of Alphanumeric codes into FDI notation
-- harmonisation of surfaces, tooth-level and periodontal formats
-- preparation of datasets for some periodontal index computation (BOP,
-  PI, PCR)
+  - detects dataset format and converts it into a standard tidy
+    structure
+  - performs automatic conversion of Alphanumeric codes into FDI
+    notation
+  - harmonization of surfaces, tooth-level and periodontal formats
+  - preparation of datasets for some periodontal index computation (BOP,
+    PI, PCR)
 
 3.  Clinical index computation:
 
@@ -286,25 +288,25 @@ dataset types:
 
 2.  Periodontal long format
 
-Columns:
+    Columns:
 
-- `tooth`  
-- `tooth_side`  
-- value column (index‑specific)
+    - `tooth`  
+    - `tooth_side`  
+    - value column (index‑specific)
 
 3.  Tooth‑level format. Used by DMFT, def, PSI tooth‑level mode.
 
-Columns:
+    Columns:
 
-- `tooth`  
-- status/value column
+    - `tooth`  
+    - status/value column
 
 4.  Sextant‑level format. Used by PSI/CPI.
 
-Columns:
+    Columns:
 
-- `sextant`  
-- `psi_code`
+    - `sextant`  
+    - `psi_code`
 
 **Note:**
 
@@ -320,12 +322,16 @@ Universal, and Alphanumeric.
 
 The function performs the following operations:
 
-– Automatic conversion of Alphanumeric notation into FDI  
-– FDI notation is preserved without modification – Universal notation is
-preserved; no automatic conversion is applied – Ambiguous numeric codes
-are preserved exactly as provided - Includes rigorous tooth-code
-validation: invalid entries trigger an error instead of processing
-inconsistent data.
+- Automatic conversion of Alphanumeric notation into FDI
+
+- FDI notation is preserved without modification
+
+- Universal notation is preserved; no automatic conversion is applied
+
+- Ambiguous numeric codes are preserved exactly as provided
+
+- Includes rigorous tooth-code validation: invalid entries trigger an
+  error instead of processing inconsistent data.
 
 Users who require explicit conversions (e.g.,
 `convert_universal_to_fdi()`) should apply them before calling
@@ -409,8 +415,8 @@ common across BOP, PCR and PI indices:
 
 - Ensures that required columns are present:
 
-  `patient_id`, `tooth`, `tooth_side`, and the index‑specific value
-  column.
+  - `patient_id`, `tooth`, `tooth_side`, and the index‑specific value
+    column.
 
 - Verifies that `tooth_side` values match the expected set for the
   selected index:
@@ -452,9 +458,11 @@ numbers of sites.
 
 - `compute_psi()`: PSI/CPI uses tooth‑level or sextant‑level data and
   requires a different validation model.
+
 - `compute_dmft()`, `compute_def()`: These indices operate on
   tooth‑level status codes (D/M/F or d/e/f) and do not involve surfaces
   or site‑level values.
+
 - `compute_icon()`
 
 **Why this separation:** By isolating global structural validation in
@@ -791,7 +799,7 @@ internally converted to uppercase before validation.
 
 The output always contains: patient_id, tooth, D, E, F.
 
-**Return values:**A tibble with validated and mutually exclusive binary
+**Return values:** A tibble with validated and mutually exclusive binary
 columns D, E, F.
 
 **Notes:**
@@ -828,9 +836,11 @@ The function also enforces strict validation of the D/E/F indicators:
 When invalid teeth or invalid D/E/F values are found:
 
 - the entire patient is omitted
+
 - a combined warning is emitted listing all omitted patients and the
-  reason(s) – missing required primary teeth also cause the patient to
-  be omitted.
+  reason(s)
+
+- missing required primary teeth also cause the patient to be omitted.
 
 The return value always includes a tibble with columns:
 
@@ -1030,7 +1040,8 @@ The posttreatment result is considered acceptable when:
 
 **4. Improvement grade:**.
 
-Improvement is computed using the ICON formula: I=-4,
+Improvement is computed using the ICON formula:
+$$ I = \mathrm{icon\_pre} - 4 \cdot \mathrm{icon\_post} $$
 
 Based on the value of *I*, the function assigns:
 
@@ -1055,17 +1066,19 @@ If a patient has more than one row for the same timepoint:
 
 The function mirrors the behavior of `score_icon_components()`:
 
-`.on_error = "stop"` - Stops immediately if any component‑level error is
-detected.  
+`.on_error = "stop"`
+
+- Stops immediately if any component‑level error is detected.  
 - Returns only fully valid patients.
 
-`.on_error = "collect"` (default)  
+`.on_error = "collect"` (default)
+
 - Processes only valid patients.  
+
 - Returns a list containing:
 
-- `scores`: final ICON results  
-
-- `errors`: rows excluded during component scoring
+  - `scores`: final ICON results  
+  - `errors`: rows excluded during component scoring
 
 - When `.warn = TRUE`, a summary warning is issued.
 
