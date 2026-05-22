@@ -117,7 +117,7 @@ remotes::install_github("delarosagay/oralR")
 - built to support the complete analysis pipeline, from raw data
   cleaning to clinical index computation and statistical summarization
 
-These design principles ensure that oralR can be used reliably in
+These design principles ensure that `oralR` can be used reliably in
 epidemiology, clinical research, teaching, and routine data processing.
 
 ## **Package structure**
@@ -202,8 +202,10 @@ hierarchical properties for each tooth.
   “ambiguous” unless a preference was set using
   `handle_ambiguous_notation()`.
 
-*Note:* This function does not split or extract multiple identifiers
-from free text; each element of the input vector is treated as a single
+**Note:**
+
+This function does not split or extract multiple identifiers from free
+text; each element of the input vector is treated as a single
 identifier.
 
 ### **Conversion functions (between all three systems)**
@@ -304,8 +306,10 @@ Columns:
 - `sextant`  
 - `psi_code`
 
-*Note:* sextant‑level datasets are detected but not reshaped, as PSI
-does not require tooth‑ or surface‑level harmonization.
+**Note:**
+
+sextant‑level datasets are detected but not reshaped, as PSI does not
+require tooth‑ or surface‑level harmonization.
 
 The function determines the format automatically and raises an error if
 multiple formats are mixed in the same dataset.
@@ -481,7 +485,7 @@ manually.
 **Supported input format:** The function requires tooth‑surface–level
 data, with one row per tooth surface.
 
-Required columns:
+**Required columns:**
 
 - `patient_id`
 - `tooth` (FDI permanent notation)
@@ -614,7 +618,9 @@ each patient.
 The function accepts both tooth‑level and sextant‑level input and
 automatically determines the appropriate mode per patient.
 
-**Supported input formats:** **1. Tooth‑level data:**
+**Supported input formats:**
+
+**1. Tooth‑level data:**
 
 - Required columns: `patient_id`, `tooth` (FDI notation, two digits),
   `psi_code`
@@ -651,7 +657,7 @@ automatically determines the appropriate mode per patient.
 
 - Mode is determined independently for each patient based on whether
   non-NA values exist in the tooth or sextant columns.
-- Tolerant-Zero Policy: To protect statistical and clinical conclusions
+- Tolerant-zero policy: To protect statistical and clinical conclusions
   from data-entry typos, the function does not silently filter out
   anomalies.
 - Patients are omitted from the final output table if they exhibit any
@@ -685,25 +691,29 @@ raises an error to avoid ambiguity.
 Accepts status codes in either uppercase or lowercase. All values are
 internally converted to uppercase before validation.
 
-**Key rules:** Exactly one scoring system must be used per dataset:
+**Key rules:**
 
-- If D/M/F exist → status must not exist.
-- If status exists → D/M/F must not exist.
+- Exactly one scoring system must be used per dataset:
 
-Status values are converted to binary D/M/F columns.
+  - If D/M/F exist → status must not exist.
+  - If status exists → D/M/F must not exist.
 
-Binary format is validated:
+- Status values are converted to binary D/M/F columns.
 
-- Only 0/1/NA allowed.
-- D/M/F must be mutually exclusive.
+- Binary format is validated:
 
-The output always contains: patient_id, tooth, D, M, F.
+  - Only 0/1/NA allowed.
+  - D/M/F must be mutually exclusive.
+
+- The output always contains: patient_id, tooth, D, M, F.
 
 **Return values:** A tibble with validated and mutually exclusive binary
 columns D, M, F.
 
-**Notes:** This function does not compute DMFT; it only prepares the
-dataset. It should be applied before calling `compute_dmft()`.
+**Notes:**
+
+- This function does not compute DMFT; it only prepares the dataset.
+- It should be applied before calling `compute_dmft()`.
 
 #### **`compute_dmft()`**
 
@@ -765,17 +775,19 @@ to avoid ambiguity.
 Accepts status codes in either uppercase or lowercase. All values are
 internally converted to uppercase before validation.
 
-**Key rules:** Exactly one scoring system must be used per dataset:
+**Key rules:**
 
-- If D/E/F exist: status must not exist.
-- If status exists: D/E/F must not exist.
+- Exactly one scoring system must be used per dataset:
 
-Status values are converted to binary D/E/F columns.
+  - If D/E/F exist: status must not exist.
+  - If status exists: D/E/F must not exist.
 
-Binary format is validated:
+- Status values are converted to binary D/E/F columns.
 
-- Only 0/1/NA allowed.
-- D/E/F must be mutually exclusive.
+- Binary format is validated:
+
+  - Only 0/1/NA allowed.
+  - D/E/F must be mutually exclusive.
 
 The output always contains: patient_id, tooth, D, E, F.
 
@@ -826,7 +838,7 @@ The return value always includes a tibble with columns:
 - def — the total number of D + E + F findings across valid primary FDI
   teeth
 
-*Note:* The function never stops execution (unless deliberately
+**Note:** The function never stops execution (unless deliberately
 modified); invalid patients are skipped. The warning summarizes all
 omissions at the end of processing.
 
@@ -882,26 +894,35 @@ standardised dataset. The function scores the five ICON components:
 The ICON buccal A‑P component score is the sum of the left and right
 scores, yielding a final range of 0–4.
 
-*Input requirements:*
+**Input requirements:**
 
 The function expects one row per patient/time‑point, with the following
-variables: - patient_id - time (“pre” or “post”, case‑insensitive) -
-aesthetic_component (integer 1–10) - upper_crowding_mm (≥ 0) -
-upper_spacing_mm (≥ 0) (At least one of these two must be provided). -
-crossbite (logical TRUE/FALSE; “yes”/“no” and 0/1 are allowed and
-coerced) - incisor_openbite_mm (≥ 0) - incisor_overbite_category
-(integer 0–3) (At least one of these two must be provided). -
-buccal_ap_left, buccal_ap_right (each integer 0–2) - impacted_teeth
-(logical; optional; missing defaults to FALSE)
+variables:
 
-*Error handling:*
+- patient_id
+- time (“pre” or “post”, case‑insensitive)
+- aesthetic_component (integer 1–10)
+- upper_crowding_mm (≥ 0)
+- upper_spacing_mm (≥ 0) (At least one of these two must be provided).
+- crossbite (logical TRUE/FALSE; “yes”/“no” and 0/1 are allowed and
+  coerced)
+- incisor_openbite_mm (≥ 0)
+- incisor_overbite_category (integer 0–3) (At least one of these two
+  must be provided).
+- buccal_ap_left, buccal_ap_right (each integer 0–2)
+- impacted_teeth (logical; optional; missing defaults to FALSE)
 
-The function implements exhaustive validation: - Missing required pairs
-(e.g., both crowding and spacing missing; both openbite and overbite
-missing) - Out‑of‑range numeric values(negative values, values above
-max_discrepancy_allowed, incorrect categories) - Non‑logical crossbite
-or impacted teeth - Missing buccal A‑P sides - Non‑integer components
-where integers are required
+**Error handling:**
+
+The function implements exhaustive validation:
+
+- Missing required pairs (e.g., both crowding and spacing missing; both
+  openbite and overbite missing)
+- Out‑of‑range numeric values(negative values, values above
+  max_discrepancy_allowed, incorrect categories)
+- Non‑logical crossbite or impacted teeth
+- Missing buccal A‑P sides
+- Non‑integer components where integers are required
 
 Invalid rows are never partially processed. For each patient:
 
@@ -910,12 +931,15 @@ Invalid rows are never partially processed. For each patient:
 - If .on_error = “stop” is used, execution stops with a consolidated
   message.
 
-*Return value:*
+**Return value:**
 
-If .on_error = “collect” (default): A list with:
+If .on_error = “collect” (default):
 
-- scores: tibble containing all valid ICON component scores
-- errors: tibble with row index, patient ID, and reason(s) for exclusion
+- A list with:
+
+  - scores: tibble containing all valid ICON component scores
+  - errors: tibble with row index, patient ID, and reason(s) for
+    exclusion
 
 If .on_error = “stop”:
 
@@ -969,8 +993,10 @@ The function returns:
 If a patient has only one timepoint, the missing score is returned as
 `NA`.
 
-**Derived classifications:** The function automatically computes all
-ICON‑defined clinical classifications.
+**Derived classifications:**
+
+The function automatically computes all ICON‑defined clinical
+classifications.
 
 **1. Treatment need:**
 
@@ -1090,11 +1116,13 @@ statistical overview, including:
 The function is intended for quick exploratory analysis, reporting, and
 epidemiological summaries.
 
-**Input:** The function accepts x - a numeric vector, or a character
-vector convertible to numeric (e.g.,
-dmft_scores$dmft, icon_scores$icon_pre, etc.).
+**Input:**
 
-Missing values (NA) are automatically removed from all calculations.
+- The function accepts x - a numeric vector, or a character vector
+  convertible to numeric (e.g., dmft_scores$dmft, icon_scores$icon_pre,
+  etc.).
+
+- Missing values (NA) are automatically removed from all calculations.
 
 **Computed statistics:**
 
@@ -1384,7 +1412,8 @@ parse_notation(c("11","46","URB","A","30"))
 #> 5 30    Universal           4 permanent
 ```
 
-*Note:*  
+**Note:**
+
 `parse_notation()` treats each element of the input vector as a single
 tooth identifier. It does not split or extract multiple identifiers from
 free text.
@@ -1432,7 +1461,8 @@ x
 #> [1] "Universal"
 ```
 
-*Note:*  
+**Note:**
+
 Non‑ambiguous values (e.g., `"36"`) are not affected by `"as_fdi"` or
 `"as_universal"`.
 
@@ -1478,8 +1508,10 @@ df_clean
 #> 6  6    21
 ```
 
-*Note* Only ambiguous values are affected by “as_fdi” or “as_universal”.
-For example, “11”, “14”, “21” and “24” are ambiguous between FDI and
+**Note:**
+
+Only ambiguous values are affected by “as_fdi” or “as_universal”. For
+example, “11”, “14”, “21” and “24” are ambiguous between FDI and
 Universal, while values like “36” are not. Using action = “as_fdi”
 forces ambiguous identifiers to be interpreted as FDI before parsing.
 
@@ -3270,7 +3302,7 @@ analyze_prevalence(D_binary)
 #> 1     3          3          1  0.439       1
 ```
 
-## Author
+## Authors
 
 - **Cristina de la Rosa-Gay** (Author, Maintainer)
 - **Daniel Fernández** (Contributor)
@@ -3289,9 +3321,9 @@ You can also check the citation format directly in R using:
 citation("oralR")
 ```
 
-
 ## Documentation
 
-The introduction to the package can be found in [oralR-introduction.pdf](oralR-introduction.pdf). 
+The introduction to the package can be found in
+[oralR-introduction.pdf](oralR-introduction.pdf).
 
 *Please download the file to use the interactive table of contents.*
