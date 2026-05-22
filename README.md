@@ -3279,7 +3279,7 @@ analyze_prevalence(D_binary)
 
 If you use `oralR` in your research, please cite it as follows:
 
-> de-la-Rosa-Gay, C. & Fernández, D, N. (2026). oralR: Tools for Dental
+> de-la-Rosa-Gay, C. & Fernández, D. (2026). oralR: Tools for Dental
 > Data Analysis in R. R package version 0.1.0.
 > <https://github.com/delarosagay/oralR>
 
@@ -3288,3 +3288,10 @@ You can also check the citation format directly in R using:
 ``` r
 citation("oralR")
 ```
+
+
+## Documentation
+
+The introduction to the package can be found in [oralR-introduction.pdf](oralR-introduction.pdf). 
+
+*Please download the file to use the interactive table of contents.*
