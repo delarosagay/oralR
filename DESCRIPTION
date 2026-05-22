@@ -1,0 +1,35 @@
+Package: oralR
+Type: Package
+Title: Tools for Dental Data Analysis in R
+Version: 0.1.0
+Authors@R: c(
+    person("Cristina", "de-la-Rosa-Gay", email = "mdelarosa@uoc.edu", role = c("aut", "cre"), comment = c(ORCID = "0009-0004-1518-8648")),
+    person("Daniel", "Fernández", email = "dfernandezmar@uoc.edu", role = "ctb", comment = c(GitHub = "dfdez23"))
+  )
+Author: Cristina de-la-Rosa-Gay [aut, cre], Daniel Fernández [ctb]
+Maintainer: Cristina de-la-Rosa-Gay <mdelarosa@uoc.edu>
+Description: oralR offers support for dental notation handling, including 
+	detection, parsing, and conversion between FDI, Universal and 
+	Alphanumeric systems, as well as data tidying helpers for clinical
+	datasets. It also provides tools for analyzing clinical, periodontal and orthodontic
+	data, including functions for computing DMFT/DEF, BOP, PCR, PI, PSI and
+	ICON indices. Additional utilities are included for descriptive
+	statistics and prevalence estimation.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Imports:
+    tibble,
+    dplyr,
+    tidyr,
+    magrittr,
+    rlang
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Suggests: 
+    ggplot2,
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+VignetteBuilder: knitr

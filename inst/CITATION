@@ -1,0 +1,10 @@
+bibentry("Manual",
+  title = "oralR: Tools for Dental Data Analysis in R",
+  author = c(
+    person("Cristina", "de-la-Rosa-Gay", comment = c(ORCID = "0009-0004-1518-8648")),
+    person("Daniel", "Fernández", comment = c(GitHub = "dfdez23"))
+  ),
+  year = "2026",
+  note = paste("R package version", packageVersion("oralR")),
+  url = "https://github.com/delarosagay/oralR"
+)
