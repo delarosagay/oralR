@@ -12,6 +12,17 @@
 #'
 #' @param data A data frame or tibble.
 #' @param index A character string: "BOP", "PCR", or "PI".
+#'
+#' @examples
+#' # Example 1: Correct dataset for PCR (returns TRUE invisibly)
+#' valid_pcr <- dplyr::tibble(
+#'   patient_id = rep("PAT_01", 4),
+#'   tooth      = rep("11", 4),
+#'   tooth_side = c("M", "D", "V", "P"),
+#'   value      = c(0, 1, 0, 1)
+#' )
+#' validate_index_input(valid_pcr, index = "PCR")
+#'
 #' @export
 validate_index_input <- function(data, index) {
 

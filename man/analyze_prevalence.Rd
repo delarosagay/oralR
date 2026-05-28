@@ -23,3 +23,14 @@ Computes prevalence and confidence intervals for any binary clinical
 indicator. The function is general-purpose and can be applied to any
 logical or 0/1-coded numeric vector.
 }
+\examples{
+# Example 1: Using a logical vector (e.g., presence of DMFT > 0)
+dmft_affected <- c(TRUE, FALSE, TRUE, TRUE, FALSE, NA)
+analyze_prevalence(dmft_affected)
+
+# Example 2: Using a numeric binary vector (e.g., BOP or plaque presence)
+bop_sites <- c(1, 0, 1, 1, 0, 0, 0)
+analyze_prevalence(bop_sites)
+
+
+}

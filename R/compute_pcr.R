@@ -6,6 +6,21 @@
 #' @param data A data frame (ideally processed by \code{tidy_dental}).
 #' @return A tibble with \code{patient_id}, \code{total_points},
 #'    \code{plaque_points}, and \code{pcr_percent}.
+#'
+#' @examples
+#' # Create a compact tidy dataset for a single patient with 4 surfaces per tooth
+#' mock_pcr_data <- dplyr::tibble(
+#'   patient_id = rep("PAT_001", 8),
+#'   tooth      = rep(c("16", "11"), each = 4),
+#'   tooth_side = rep(c("M", "D", "V", "P"), 2),
+#'   value      = c(1, 0, 1, 0,  1, 1, 0, 0)
+#' )
+#'
+#' # Compute the Plaque Control Record (PCR) index
+#' pcr_results <- compute_pcr(mock_pcr_data)
+#' pcr_results
+#'
+#'
 #' @export
 compute_pcr <- function(data) {
 

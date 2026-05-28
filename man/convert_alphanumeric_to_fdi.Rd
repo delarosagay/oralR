@@ -20,3 +20,10 @@ Converts dental alphanumeric notation (Quadrant + Tooth) into FDI notation.
 Quadrants are identified by "UR", "UL", "LL", or "LR". Permanent teeth
 are identified by numbers 1–8, and primary teeth by letters A–E.
 }
+\examples{
+# Convert Alphanumeric codes to FDI notation and print the output
+alphanumeric_codes <- c("UR1", "UL1", "LL6")
+fdi_codes <- convert_alphanumeric_to_fdi(alphanumeric_codes)
+fdi_codes
+
+}

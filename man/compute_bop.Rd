@@ -18,3 +18,16 @@ Calculates the Bleeding on Probing (BOP) index per patient as the percentage
 of bleeding sites. Each present tooth must have exactly six sites:
 MB, B, DB, ML, L, and DL.
 }
+\examples{
+# Create a toy dataset for a single patient with 6 sites for tooth 11
+mock_bop_data <- data.frame(
+   patient_id = rep("PAT_001", 6),
+   tooth = rep(11, 6),
+   tooth_side = c("MB", "B", "DB", "ML", "L", "DL"),
+   bop = c(1, 0, 1, 0, 0, 1)  # 1 = bleeding, 0 = no bleeding
+)
+
+# Compute the Bleeding on Probing (BOP) index
+compute_bop(mock_bop_data)
+
+}

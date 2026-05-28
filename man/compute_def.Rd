@@ -21,3 +21,19 @@ presents a complete primary dentition from second molar to second molar.
 Patients with permanent teeth, missing primary teeth, or non‑FDI notations
 are omitted from the calculation.
 }
+\examples{
+# Create a compliant 20-tooth dataset for 2 pediatric patients
+primary_teeth <- as.character(c(51:55, 61:65, 71:75, 81:85))
+full_primary_data <- dplyr::tibble(
+  patient_id = rep(c("PED_001", "PED_002"), each = 20),
+  tooth      = rep(primary_teeth, 2),
+  D          = dplyr::if_else(patient_id == "PED_001" & tooth == "51", 1, 0),
+  E          = dplyr::if_else(patient_id == "PED_001" & tooth == "64", 1, 0),
+  F          = dplyr::if_else(patient_id == "PED_002" & tooth == "75", 1, 0)
+)
+
+# Compute the def index
+compute_def(full_primary_data)
+
+
+}

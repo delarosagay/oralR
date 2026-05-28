@@ -22,6 +22,11 @@
 #'   \item{type}{Tooth type: `"permanent"`, `"primary"`, or `NA`.}
 #' }
 #'
+#' @examples
+#' # Parse a heterogeneous vector of tooth codes from different notation systems
+#' mixed_codes <- c("11", "46", "URB", "A", "30")
+#' parse_notation(mixed_codes)
+#'
 #' @export
 parse_notation <- function(x, ...) {
 

@@ -23,3 +23,14 @@ MB, B, DB, ML, L, DL
 V → B, P → L
 MV → MB, DV → DB, MP → ML, DP → DL
 }
+\examples{
+# Example 1: Correct dataset for PCR (returns TRUE invisibly)
+valid_pcr <- dplyr::tibble(
+  patient_id = rep("PAT_01", 4),
+  tooth      = rep("11", 4),
+  tooth_side = c("M", "D", "V", "P"),
+  value      = c(0, 1, 0, 1)
+)
+validate_index_input(valid_pcr, index = "PCR")
+
+}

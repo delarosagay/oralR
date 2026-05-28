@@ -15,3 +15,10 @@ A character vector with alphanumeric notation. Invalid codes return NA.
 \description{
 Converts permanent and primary FDI notation into alphanumeric notation.
 }
+\examples{
+# Convert FDI codes to Alphanumeric notation and print the output
+fdi_codes <- c("11", "21", "36")
+alphanumeric_codes <- convert_fdi_to_alphanumeric(fdi_codes)
+alphanumeric_codes
+
+}

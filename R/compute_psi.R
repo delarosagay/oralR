@@ -6,6 +6,18 @@
 #'
 #' @param data A data frame containing PSI data.
 #' @return A tibble with \code{patient_id} and \code{psi}.
+#'
+#' @examples
+#' # Create a compact dataset with the required periodontal screening codes
+#' psi_data <- dplyr::tibble(
+#'   patient_id = rep("PAT_001", 6),
+#'   tooth      = c("16", "11", "26", "36", "31", "46"),
+#'   psi_code   = c(0, 1, 3, 4, 2, 1)
+#' )
+#'
+#' # Compute the PSI summary
+#' compute_psi(psi_data)
+#'
 #' @export
 compute_psi <- function(data) {
 

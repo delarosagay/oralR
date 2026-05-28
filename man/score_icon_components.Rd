@@ -27,3 +27,24 @@ A tibble of component scores or a list including error logs.
 Converts raw clinical measurements into weighted ICON component scores (0–5)
 following the Daniels & Richmond (2000) standards.
 }
+\examples{
+# Create a compact pre/post orthodontic dataset with various clinical profiles
+df_icon <- dplyr::tibble(
+  patient_id                = c(1, 1, 2, 3),
+  time                      = c("pre", "post", "pre", "pre"),
+  aesthetic_component       = c(6, 4, 8, 7),
+  upper_crowding_mm         = c(4, 1, NA, 2),
+  upper_spacing_mm          = c(NA, NA, 6, 1),
+  crossbite                 = c(FALSE, FALSE, TRUE, FALSE),
+  incisor_openbite_mm       = c(1.5, 0, NA, 0),
+  incisor_overbite_category = c(NA, 1, 3, 0),
+  buccal_ap_left            = c(1, 0, 2, 1),
+  buccal_ap_right           = c(1, 1, 2, 0),
+  impacted_teeth            = c(FALSE, FALSE, FALSE, TRUE)
+)
+
+# Compute the total ICON score and individual component scores
+result_icon <- score_icon_components(df_icon)
+result_icon$scores
+
+}

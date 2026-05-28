@@ -19,3 +19,16 @@ all examined surfaces, providing the total evaluated sites, the cumulative
 plaque score, and the final average index. Each tooth must have exactly four
 sites: M, D, B, and L. Plaque scores must be integers between 0 and 3.
 }
+\examples{
+# Create a compact tidy dataset with valid Plaque Index scores (integers 0-3)
+mock_pi_data <- dplyr::tibble(
+  patient_id = rep("PAT_001", 8),
+  tooth      = rep(c("16", "11"), each = 4),
+  tooth_side = rep(c("M", "D", "V", "P"), 2),
+  value      = c(0, 1, 2, 1,  0, 0, 3, 2)  # Clinical scores
+)
+
+# Compute the Plaque Index (PI) summary
+compute_pi(mock_pi_data)
+
+}

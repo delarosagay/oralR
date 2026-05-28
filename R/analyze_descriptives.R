@@ -29,8 +29,8 @@
 #' }
 #'
 #' @examples
-#' analyze_descriptives(c(0, 2, 5, 1, 0, 12, NA))
-#' analyze_descriptives(c("10", "20", "30"))
+#' analyze_descriptives(c(0, 2, 5, 1, 0, 4, 7, 0, 12, NA))
+#' analyze_descriptives(c("10", "20", "30", "13", "21", "5"))
 #'
 #' @export
 analyze_descriptives <- function(x, na.rm = TRUE) {

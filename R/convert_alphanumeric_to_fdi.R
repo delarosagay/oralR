@@ -11,6 +11,12 @@
 #'   codes return `NA`. The returned vector carries the attribute
 #'   `ambiguous_as = "FDI"`.
 #'
+#' @examples
+#' # Convert Alphanumeric codes to FDI notation and print the output
+#' alphanumeric_codes <- c("UR1", "UL1", "LL6")
+#' fdi_codes <- convert_alphanumeric_to_fdi(alphanumeric_codes)
+#' fdi_codes
+#'
 #' @export
 convert_alphanumeric_to_fdi <- function(alpha) {
 

@@ -17,3 +17,18 @@ A tibble with \code{patient_id}, \code{total_points},
 Calculates the Plaque Control Record (PCR) per patient as the percentage
 of surfaces with plaque. Each tooth must have exactly four sites: M, D, B, and L.
 }
+\examples{
+# Create a compact tidy dataset for a single patient with 4 surfaces per tooth
+mock_pcr_data <- dplyr::tibble(
+  patient_id = rep("PAT_001", 8),
+  tooth      = rep(c("16", "11"), each = 4),
+  tooth_side = rep(c("M", "D", "V", "P"), 2),
+  value      = c(1, 0, 1, 0,  1, 1, 0, 0)
+)
+
+# Compute the Plaque Control Record (PCR) index
+pcr_results <- compute_pcr(mock_pcr_data)
+pcr_results
+
+
+}

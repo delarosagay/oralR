@@ -7,6 +7,13 @@
 #' @param universal A numeric or character vector with Universal tooth codes.
 #' @return A character vector with FDI notation. Invalid codes return NA.
 #'   The returned vector carries the attribute `ambiguous_as = "FDI"`.
+#'
+#' @examples
+#' # Convert Universal codes to FDI notation and print the output
+#' universal_codes <- c("8", "9", "30")
+#' fdi_codes <- convert_universal_to_fdi(universal_codes)
+#' fdi_codes
+#'
 #' @export
 convert_universal_to_fdi <- function(universal) {
 

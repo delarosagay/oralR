@@ -16,3 +16,10 @@ A character vector with alphanumeric notation. Invalid codes return NA.
 This function converts Universal permanent (1–32) and primary (A–T)
 tooth notation into alphanumeric notation (UR/UL/LL/LR + 1–8 or A–E).
 }
+\examples{
+# Convert Universal codes to Alphanumeric notation and print the output
+universal_codes <- c("8", "9", "30")
+alphanumeric_codes <- convert_universal_to_alphanumeric(universal_codes)
+alphanumeric_codes
+
+}

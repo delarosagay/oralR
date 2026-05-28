@@ -5,6 +5,13 @@
 #'
 #' @param universal A numeric or character vector with Universal tooth codes.
 #' @return A character vector with alphanumeric notation. Invalid codes return NA.
+#'
+#' @examples
+#' # Convert Universal codes to Alphanumeric notation and print the output
+#' universal_codes <- c("8", "9", "30")
+#' alphanumeric_codes <- convert_universal_to_alphanumeric(universal_codes)
+#' alphanumeric_codes
+#'
 #' @export
 convert_universal_to_alphanumeric <- function(universal) {
 

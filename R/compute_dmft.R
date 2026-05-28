@@ -13,6 +13,20 @@
 #' @return A tibble with \code{patient_id} and \code{dmft}. Patients with
 #'   invalid or incomplete data are omitted with a warning.
 #'
+#' @examples
+#' # Create a compliant 28-tooth dataset for 2 patients using tidyverse syntax
+#' standard_teeth <- as.character(c(11:17, 21:27, 31:37, 41:47))
+#' full_dental_data <- dplyr::tibble(
+#'   patient_id = rep(c("PAT_001", "PAT_002"), each = 28),
+#'   tooth      = rep(standard_teeth, 2),
+#'   D          = dplyr::if_else(patient_id == "PAT_001" & tooth == "11", 1, 0),
+#'   M          = dplyr::if_else(patient_id == "PAT_001" & tooth == "16", 1, 0),
+#'   F          = dplyr::if_else(patient_id == "PAT_002" & tooth == "26", 1, 0)
+#' )
+#'
+#' # Compute the DMFT index
+#' compute_dmft(full_dental_data)
+#'
 #' @export
 compute_dmft <- function(data) {
 

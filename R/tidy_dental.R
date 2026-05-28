@@ -12,6 +12,25 @@
 #' @return A tibble in standardized long format with columns: patient_id, tooth, tooth_side, value, and others.
 #' @importFrom dplyr rename sym mutate select distinct everything all_of
 #' @importFrom tidyr pivot_longer separate
+#'
+#' @examples
+#' # Create a raw dataset with alphanumeric, inconsistent tooth codes and wide format surfaces
+#' raw_data <- dplyr::tibble(
+#'   patient_id = rep(1:3, each = 4),
+#'   tooth = c("ur6", "UR6", "UL1", "ll3",
+#'             "UR6", "ul1", "LL3", "lr7",
+#'             "UR6", "UL1", "LL3", "LR7"),
+#'   m = c(1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0),
+#'   d = c(0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1),
+#'   v = c(1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1),
+#'   p = c(0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0),
+#'   examiner = c("A", "A", "B", "B", "A", "B", "A", "A", "B", "B", "A", "B")
+#' )
+#'
+#' # Tidy the dental dataset using explicit package prefix
+#' tidy_data <- tidy_dental(raw_data)
+#' print(tidy_data)
+#'
 #' @export
 tidy_dental <- function(data, patient_col = "patient_id") {
 

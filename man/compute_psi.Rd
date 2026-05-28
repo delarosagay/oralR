@@ -17,3 +17,15 @@ Calculates the Periodontal Screening Index (PSI) per patient. The final score
 is the maximum value recorded across all sextants. Supports both tooth-level
 and sextant-level input formats.
 }
+\examples{
+# Create a compact dataset with the required periodontal screening codes
+psi_data <- dplyr::tibble(
+  patient_id = rep("PAT_001", 6),
+  tooth      = c("16", "11", "26", "36", "31", "46"),
+  psi_code   = c(0, 1, 3, 4, 2, 1)
+)
+
+# Compute the PSI summary
+compute_psi(psi_data)
+
+}

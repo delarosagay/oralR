@@ -32,3 +32,9 @@ that can belong to more than one system are treated as ambiguous unless a
 user-defined preference is provided through the \code{ambiguous_as} attribute,
 typically set by \code{handle_ambiguous_notation()}.
 }
+\examples{
+# Parse a heterogeneous vector of tooth codes from different notation systems
+mixed_codes <- c("11", "46", "URB", "A", "30")
+parse_notation(mixed_codes)
+
+}

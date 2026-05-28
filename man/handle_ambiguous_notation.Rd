@@ -30,3 +30,8 @@ Identifies tooth codes that could belong to both FDI and Universal systems
 (e.g., "11" through "32") and applies a specified action to resolve
 the ambiguity.
 }
+\examples{
+# Handle a vector of ambiguous tooth codes by forcing FDI notation
+ambiguous_codes <- c("11", "12", "21")
+handle_ambiguous_notation(ambiguous_codes, action = "as_fdi")
+}

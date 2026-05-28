@@ -4,6 +4,13 @@
 #'
 #' @param fdi A numeric or character vector with FDI tooth codes.
 #' @return A character vector with alphanumeric notation. Invalid codes return NA.
+#'
+#' @examples
+#' # Convert FDI codes to Alphanumeric notation and print the output
+#' fdi_codes <- c("11", "21", "36")
+#' alphanumeric_codes <- convert_fdi_to_alphanumeric(fdi_codes)
+#' alphanumeric_codes
+#'
 #' @export
 convert_fdi_to_alphanumeric <- function(fdi) {
 

@@ -18,3 +18,10 @@ Converts Universal permanent (1–32) and primary (A–T)
 tooth notation into FDI notation (11-18, 21-28, 31-38, 41–48 for permanent,
 51-55, 61-65, 71-75, 81–85 for primary).
 }
+\examples{
+# Convert Universal codes to FDI notation and print the output
+universal_codes <- c("8", "9", "30")
+fdi_codes <- convert_universal_to_fdi(universal_codes)
+fdi_codes
+
+}

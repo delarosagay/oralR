@@ -31,3 +31,23 @@ Aggregates Index of Complexity, Outcome and Need (ICON) component scores
 into weighted totals per patient and timepoint. It derives treatment need,
 complexity grades, and improvement scales according to Daniels & Richmond (2000).
 }
+\examples{
+# Create a compact pre/post orthodontic dataset with various clinical profiles
+df_icon <- dplyr::tibble(
+  patient_id                = c(1, 1, 2, 3),
+  time                      = c("pre", "post", "pre", "pre"),
+  aesthetic_component       = c(6, 4, 8, 7),
+  upper_crowding_mm         = c(4, 1, NA, 2),
+  upper_spacing_mm          = c(NA, NA, 6, 1),
+  crossbite                 = c(FALSE, FALSE, TRUE, FALSE),
+  incisor_openbite_mm       = c(1.5, 0, NA, 0),
+  incisor_overbite_category = c(NA, 1, 3, 0),
+  buccal_ap_left            = c(1, 0, 2, 1),
+  buccal_ap_right           = c(1, 1, 2, 0),
+  impacted_teeth            = c(FALSE, FALSE, FALSE, TRUE)
+)
+
+# Compute the final global ICON score and treatment need classification
+result_final <- compute_icon(df_icon)
+result_final$scores
+}

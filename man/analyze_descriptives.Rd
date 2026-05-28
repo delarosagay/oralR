@@ -39,7 +39,7 @@ only when 3 <= n <= 5000 and variance > 0) and identifies outliers using
 the Tukey's Interquartile Range (IQR) rule (1.5 * IQR).
 }
 \examples{
-analyze_descriptives(c(0, 2, 5, 1, 0, 12, NA))
-analyze_descriptives(c("10", "20", "30"))
+analyze_descriptives(c(0, 2, 5, 1, 0, 4, 7, 0, 12, NA))
+analyze_descriptives(c("10", "20", "30", "13", "21", "5"))
 
 }

@@ -11,6 +11,17 @@
 #'   (default = 0.95).
 #'
 #' @return A tibble with n, n_positive, prevalence, ci_low, and ci_high.
+#'
+#' @examples
+#' # Example 1: Using a logical vector (e.g., presence of DMFT > 0)
+#' dmft_affected <- c(TRUE, FALSE, TRUE, TRUE, FALSE, NA)
+#' analyze_prevalence(dmft_affected)
+#'
+#' # Example 2: Using a numeric binary vector (e.g., BOP or plaque presence)
+#' bop_sites <- c(1, 0, 1, 1, 0, 0, 0)
+#' analyze_prevalence(bop_sites)
+#'
+#'
 #' @export
 analyze_prevalence <- function(x, na.rm = TRUE, conf_level = 0.95) {
 

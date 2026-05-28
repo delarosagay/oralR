@@ -16,6 +16,10 @@
 #'
 #' @return A modified version of \code{x}. For \code{"as_fdi"} and
 #'    \code{"as_universal"}, the vector includes an attribute \code{ambiguous_as}.
+#' @examples
+#' # Handle a vector of ambiguous tooth codes by forcing FDI notation
+#' ambiguous_codes <- c("11", "12", "21")
+#' handle_ambiguous_notation(ambiguous_codes, action = "as_fdi")
 #' @export
 handle_ambiguous_notation <- function(x, action = c("keep", "as_fdi", "as_universal", "remove", "na")) {
 
