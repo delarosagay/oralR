@@ -3,8 +3,8 @@ title: "Introduction to oralR"
 author: "Cristina de-la-Rosa-Gay and Daniel Fernández"
 output: 
   rmarkdown::html_vignette:
-    toc: true            
-    toc_depth: 3         
+    toc: true
+    toc_depth: 3
     fig_caption: true
 vignette: >
   %\VignetteIndexEntry{oralR-intro}
