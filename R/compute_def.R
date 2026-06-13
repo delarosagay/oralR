@@ -26,16 +26,17 @@
 #' # Compute the def index
 #' compute_def(full_primary_data)
 #'
-#'
 #' @export
 compute_def <- function(data) {
 
+  # 1. Basic validation of required columns
   required_cols <- c("patient_id", "tooth", "D", "E", "F")
   missing_cols <- setdiff(required_cols, names(data))
   if (length(missing_cols) > 0) {
     stop("Missing required columns: ", paste(missing_cols, collapse = ", "))
   }
 
+  # 2. Define dentition sets and alternate notation benchmarks
   valid_fdi_primary   <- as.character(c(51:55, 61:65, 71:75, 81:85))
   valid_fdi_permanent <- as.character(c(11:18, 21:28, 31:38, 41:48))
 
@@ -47,6 +48,7 @@ compute_def <- function(data) {
 
   required_primary <- valid_fdi_primary
 
+  # 3. Process patients
   patients <- unique(data$patient_id)
   results_list <- list()
   error_list <- list()
@@ -54,26 +56,38 @@ compute_def <- function(data) {
   for (pid in patients) {
 
     pdata <- data[data$patient_id == pid, ]
-    teeth <- as.character(pdata$tooth)
+    pdata$tooth <- toupper(as.character(pdata$tooth))
+    teeth <- pdata$tooth
 
+    # 3a. Reject permanent teeth
     is_perm <- teeth %in% c(valid_fdi_permanent, universal_perm, alpha_perm)
     if (any(is_perm)) {
       error_list[[as.character(pid)]] <- "Permanent teeth detected. DEF is for primary teeth only."
       next
     }
 
+    # 3b. Reject non-FDI primary notations
     is_non_fdi_primary <- teeth %in% c(universal_primary, alpha_primary)
     if (any(is_non_fdi_primary)) {
       error_list[[as.character(pid)]] <- "Non-FDI primary notation detected. Use FDI."
       next
     }
 
+    # 3c. Reject invalid FDI primary codes
     if (!all(teeth %in% valid_fdi_primary)) {
       bad <- unique(teeth[!teeth %in% valid_fdi_primary])
       error_list[[as.character(pid)]] <- paste0("Invalid FDI primary teeth: ", paste(bad, collapse = ", "))
       next
     }
 
+    # 3d. Reject duplicate records for the same tooth
+    if (any(duplicated(teeth))) {
+      bad_dup <- unique(teeth[duplicated(teeth)])
+      error_list[[as.character(pid)]] <- paste0("Duplicate teeth detected: ", paste(bad_dup, collapse = ", "))
+      next
+    }
+
+    # 3e. Check completeness of required primary dentition
     missing_teeth <- setdiff(required_primary, teeth)
     if (length(missing_teeth) > 0) {
       error_list[[as.character(pid)]] <- paste0(
@@ -83,29 +97,34 @@ compute_def <- function(data) {
       next
     }
 
+    # 3f. Validate D/E/F values
     def_matrix <- as.matrix(pdata[, c("D", "E", "F")])
     if (!all(def_matrix %in% c(0, 1, NA))) {
       error_list[[as.character(pid)]] <- "D, E, and F values must be 0 or 1."
       next
     }
 
+    # 3g. Exclusivity check
     if (any(rowSums(def_matrix, na.rm = TRUE) > 1)) {
       error_list[[as.character(pid)]] <- "D/E/F are mutually exclusive per tooth."
       next
     }
 
+    # 3h. Compute DEF
     results_list[[as.character(pid)]] <- tibble::tibble(
       patient_id = pid,
       def = as.integer(sum(pdata$D, pdata$E, pdata$F, na.rm = TRUE))
     )
   }
 
+  # 4. Assemble results
   if (length(results_list) == 0) {
     results <- tibble::tibble(patient_id = character(), def = integer())
   } else {
     results <- dplyr::bind_rows(results_list)
   }
 
+  # 5. Warning for omitted patients
   if (length(error_list) > 0) {
     warning(
       "Some patients were omitted due to invalid DEF data:\n",

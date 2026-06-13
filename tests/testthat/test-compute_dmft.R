@@ -108,6 +108,26 @@ test_that("compute_dmft enforces exclusivity of D/M/F", {
 })
 
 
+test_that("compute_dmft omits patients with duplicate teeth", {
+
+  # Build a complete dentition but append a duplicate "11" at the end
+  teeth_with_duplicate <- c(
+    as.character(11:17), as.character(21:27),
+    as.character(31:37), as.character(41:47),
+    "11" # Duplicate record
+  )
+
+  df <- tibble::tibble(
+    patient_id = 1,
+    tooth = teeth_with_duplicate,
+    D = 0, M = 0, F = 0
+  )
+
+  expect_warning(result <- compute_dmft(df), "Duplicate teeth detected")
+  expect_equal(nrow(result), 0)
+})
+
+
 test_that("compute_dmft handles mixed patient quality correctly", {
 
   df <- tibble::tribble(
@@ -155,3 +175,4 @@ test_that("compute_dmft handles mixed patient quality correctly", {
   expect_equal(result$patient_id, 2)
   expect_equal(result$dmft, 3)
 })
+

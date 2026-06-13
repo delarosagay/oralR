@@ -83,6 +83,29 @@ test_that("compute_def enforces complete primary dentition", {
 })
 
 
+test_that("compute_def omits patients with duplicate teeth", {
+
+  # Full primary dentition but appending a duplicate "51" at the end
+  teeth_with_duplicate <- c(
+    as.character(c(51:55, 61:65, 71:75, 81:85)),
+    "51" # Duplicate record
+  )
+
+  df <- tibble::tibble(
+    patient_id = 1,
+    tooth = teeth_with_duplicate,
+    D = 0, E = 0, F = 0
+  )
+
+  expect_warning(
+    out <- compute_def(df),
+    "Duplicate teeth detected"
+  )
+
+  expect_equal(nrow(out), 0)
+})
+
+
 test_that("compute_def enforces binary and exclusive D/E/F", {
 
   # Full primary dentition

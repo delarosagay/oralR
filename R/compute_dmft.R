@@ -53,7 +53,7 @@ compute_dmft <- function(data) {
   for (pid in patients) {
 
     pdata <- data[data$patient_id == pid, ]
-    pdata$tooth <- as.character(pdata$tooth)
+    pdata$tooth <- toupper(as.character(pdata$tooth))
 
     # 3a. Reject primary teeth
     if (any(pdata$tooth %in% primary_teeth)) {
@@ -68,7 +68,14 @@ compute_dmft <- function(data) {
       next
     }
 
-    # 3c. Check completeness of required permanent dentition
+    # 3c. Reject duplicate records for the same tooth
+    if (any(duplicated(pdata$tooth))) {
+      bad_dup <- unique(pdata$tooth[duplicated(pdata$tooth)])
+      error_list[[as.character(pid)]] <- paste0("Duplicate teeth detected: ", paste(bad_dup, collapse = ", "))
+      next
+    }
+
+    # 3d. Check completeness of required permanent dentition
     missing_required <- setdiff(required_perm, pdata$tooth)
     if (length(missing_required) > 0) {
       error_list[[as.character(pid)]] <- paste0(
@@ -78,20 +85,20 @@ compute_dmft <- function(data) {
       next
     }
 
-    # 3d. Validate D/M/F values
+    # 3e. Validate D/M/F values
     dmf <- pdata[, c("D", "M", "F")]
     if (!all(as.matrix(dmf) %in% c(0, 1, NA))) {
       error_list[[as.character(pid)]] <- "D, M, and F values must be 0 or 1."
       next
     }
 
-    # 3e. Exclusivity check
+    # 3f. Exclusivity check
     if (any(rowSums(dmf, na.rm = TRUE) > 1)) {
       error_list[[as.character(pid)]] <- "D, M, and F must be mutually exclusive per tooth."
       next
     }
 
-    # 3f. Compute DMFT
+    # 3g. Compute DMFT
     dmft_value <- sum(pdata$D, pdata$M, pdata$F, na.rm = TRUE)
 
     results_list[[as.character(pid)]] <- tibble::tibble(
@@ -118,4 +125,3 @@ compute_dmft <- function(data) {
 
   return(results)
 }
-
