@@ -72,6 +72,16 @@ validate_index_input <- function(data, index) {
          ". Allowed: ", paste(valid_sides, collapse = ", "))
   }
 
+  # Validate duplicate records for the same tooth surface
+  # A patient cannot have the same side of the same tooth recorded twice
+  dup_rows <- duplicated(data[, c("patient_id", "tooth", "tooth_side")])
+  if (any(dup_rows)) {
+    dups <- data[dup_rows, c("patient_id", "tooth", "tooth_side")]
+    dups_summary <- unique(paste0("Patient ", dups$patient_id, ": Tooth ", dups$tooth, " side '", dups$tooth_side, "'"))
+    stop("Duplicate tooth surfaces detected for ", index, ":\n",
+         paste("- ", dups_summary, collapse = "\n"))
+  }
+
   # Validate numeric ranges
   vals <- data[[value_col]]
   non_na_vals <- vals[!is.na(vals)]

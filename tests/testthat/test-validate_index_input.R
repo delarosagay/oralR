@@ -41,13 +41,41 @@ test_that("validate_index_input validates tooth_side for each index", {
 
 test_that("validate_index_input accepts synonyms and case-insensitive sides", {
   data_synonyms <- tibble::tibble(
-    patient_id = 1,
-    tooth = "11",
+    patient_id = c(1, 1, 1),
+    tooth = c("11", "12", "13"), # Different teeth to avoid duplicates
     tooth_side = c("v", "p", "mb"),
     bop = c(1, 0, 1)
   )
 
   expect_silent(validate_index_input(data_synonyms, "BOP"))
+})
+
+test_that("validate_index_input detects duplicate tooth surfaces (including synonyms)", {
+  # Case 1: Pure duplication of the same side
+  data_dup_pure <- tibble::tibble(
+    patient_id = c(1, 1),
+    tooth = c("11", "11"),
+    tooth_side = c("M", "M"),
+    bop = c(1, 0)
+  )
+
+  expect_error(
+    validate_index_input(data_dup_pure, "BOP"),
+    "Duplicate tooth surfaces detected"
+  )
+
+  # Case 2: Duplication hidden behind synonyms (V and B normalize to the same side)
+  data_dup_synonym <- tibble::tibble(
+    patient_id = c(1, 1),
+    tooth = c("11", "11"),
+    tooth_side = c("V", "B"), # Both will become 'B'
+    bop = c(1, 1)
+  )
+
+  expect_error(
+    validate_index_input(data_dup_synonym, "BOP"),
+    "Duplicate tooth surfaces detected"
+  )
 })
 
 test_that("validate_index_input validates BOP values globally", {
