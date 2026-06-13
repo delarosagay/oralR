@@ -83,14 +83,22 @@ compute_psi <- function(data) {
     # TOOTH-LEVEL MODE
     if (has_tooth_values) {
       pdata$tooth <- as.character(pdata$tooth)
-      # Extract only non-NA entries for checking
       teeth_present <- pdata$tooth[!is.na(pdata$tooth)]
 
-      # Strict FDI validation: IF there are teeth codes, ALL must be valid
+      # Strict FDI validation
       if (!all(teeth_present %in% valid_fdi)) {
         bad_teeth <- unique(teeth_present[!teeth_present %in% valid_fdi])
         error_list[[as.character(pid)]] <- paste0(
           "Invalid FDI tooth numbers: ", paste(bad_teeth, collapse = ", ")
+        )
+        next
+      }
+
+      # Check for duplicate teeth in tooth-level mode
+      if (any(duplicated(teeth_present))) {
+        dup_teeth <- unique(teeth_present[duplicated(teeth_present)])
+        error_list[[as.character(pid)]] <- paste0(
+          "Duplicate teeth detected: ", paste(dup_teeth, collapse = ", ")
         )
         next
       }
@@ -101,14 +109,12 @@ compute_psi <- function(data) {
         next
       }
 
-      # Assign sextants internally (optional metadata, but ensures structure)
       pdata$sextant_idx <- tooth_to_sextant[pdata$tooth]
       psi_final <- max(pdata[[psi_col]], na.rm = TRUE)
     }
 
     # SEXTANT-LEVEL MODE
     else {
-      # Extract non-NA sextants
       sextants_present <- pdata$sextant[!is.na(pdata$sextant)]
 
       # Strict Sextant validation
@@ -116,6 +122,15 @@ compute_psi <- function(data) {
         bad_sextants <- unique(sextants_present[!sextants_present %in% 1:6])
         error_list[[as.character(pid)]] <- paste0(
           "Invalid sextant identifiers (must be 1-6): ", paste(bad_sextants, collapse = ", ")
+        )
+        next
+      }
+
+      # Check for duplicate sextants in sextant-level mode
+      if (any(duplicated(sextants_present))) {
+        dup_sex <- unique(sextants_present[duplicated(sextants_present)])
+        error_list[[as.character(pid)]] <- paste0(
+          "Duplicate sextants detected: ", paste(dup_sex, collapse = ", ")
         )
         next
       }
@@ -157,4 +172,3 @@ compute_psi <- function(data) {
 
   return(results)
 }
-
